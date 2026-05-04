@@ -423,7 +423,7 @@
     <header class="hero">
         <div class="hero-content">
             <h1>Selamat Datang di Bunihayu Forest</h1>
-            <p>Destinasi wisata alam keluarga terbaik di Subang dengan udara segar hutan pinus dan fasilitas rekreasi lengkap.</p>
+            <p>Manjakan diri Anda dan jelajahi Bunihayu Forest sambil menikmati pemandangan hijau, mendengar nyanyian merdu dari alam, sungai dan air terjun yang dapat menciptakan suasana yang menenangkan.</p>
             <a href="#fasilitas" class="btn-primary">Lihat Fasilitas</a>
         </div>
     </header>
@@ -469,24 +469,24 @@
 
         <div class="facility-grid">
             <div class="facility-card" data-aos>
-                <img src="https://images.unsplash.com/photo-1536431311719-398b6704d4cc?auto=format&fit=crop&w=800&q=80" class="facility-img" alt="Waterfall">
+                <img src="https://www.bunihayu.com/images/image-waterfall.jpg" class="facility-img" alt="Waterfall">
                 <div class="facility-info">
-                    <h3>Curug Kampoeng Ciherang</h3>
-                    <p>Keindahan air terjun alami dengan air yang jernih dan segar, area terbaik untuk merilekskan pikiran dari kepenatan kota.</p>
+                    <h3>Waterfall</h3>
+                    <p>Curug Cinangrang, Air terjun tersembunyi dengan ketinggian 20 m bisa dengan santai Anda nikmati dengan aliran sungai yang mengalir tenang..</p>
                 </div>
             </div>
             <div class="facility-card" data-aos>
-                <img src="https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=800&q=80" class="facility-img" alt="Hot Spring">
+                <img src="https://www.bunihayu.com/images/image-hot-spring-pools.jpg" class="facility-img" alt="Hot Spring">
                 <div class="facility-info">
-                    <h3>Kolam Air Hangat</h3>
-                    <p>Berendam di kolam air hangat alami di tengah udara gunung yang sejuk memberikan sensasi kesegaran yang luar biasa.</p>
+                    <h3>Hot Spring Pools</h3>
+                    <p>Nikmati sensasi berendam di kolam air panas alami di tengah hutan sambil mendengar suara gemericik air sungai dapat membuat tubuh menjadi rileks..</p>
                 </div>
             </div>
             <div class="facility-card" data-aos>
-                <img src="https://images.unsplash.com/photo-1499696010180-025ef6e1a8f9?auto=format&fit=crop&w=800&q=80" class="facility-img" alt="Camping">
+                <img src="https://www.bunihayu.com/images/image-glamping.jpg" class="facility-img" alt="Camping">
                 <div class="facility-info">
-                    <h3>Glamping & Camping Ground</h3>
-                    <p>Nikmati malam yang syahdu dengan menginap di fasilitas glamping premium atau mendirikan tenda di camping ground yang aman.</p>
+                    <h3>Glamping</h3>
+                    <p>Suasana Glamping di tengah hutan dengan pemandangan air terjun, dekat dengan aliran sungai dan kolam air panas alami.</p>
                 </div>
             </div>
         </div>
@@ -553,7 +553,7 @@
         <div class="footer-grid">
             <div class="footer-logo">
                 <h2>Bunihayu Forest</h2>
-                <p>Wana Wisata Kampoeng Ciherang Bunihayu adalah bukti harmoni antara pelestarian alam dan pariwisata berkelanjutan.</p>
+                <p>Manjakan diri Anda dan jelajahi Bunihayu Forest sambil menikmati pemandangan hijau, mendengar nyanyian merdu dari alam, sungai dan air terjun yang dapat menciptakan suasana yang menenangkan..</p>
             </div>
             <div class="footer-links">
                 <h4>Navigasi</h4>
@@ -566,17 +566,15 @@
             <div class="footer-links">
                 <h4>Social Media</h4>
                 <ul>
-                    <li><a href="#"><i class="fab fa-instagram mr-2"></i> Instagram</a></li>
-                    <li><a href="#"><i class="fab fa-facebook mr-2"></i> Facebook</a></li>
-                    <li><a href="#"><i class="fab fa-youtube mr-2"></i> YouTube</a></li>
+                    <li><a href="@bunihayu.forest"><i class="fab fa-instagram mr-2"></i> Instagram</a></li>
+                    <li><a href="https://www.bunihayu.com/"><i class="fab fa-home mr-2"></i> Website Official</a></li>
                 </ul>
             </div>
             <div class="footer-links">
                 <h4>Kontak</h4>
                 <ul>
-                    <li><a href="#">Email Kami</a></li>
-                    <li><a href="#">WhatsApp</a></li>
-                    <li><a href="#">Partner Kami</a></li>
+                    <li><a href="RM.bunihayuforest@temp.co.id">Email Kami</a></li>
+                    <li><a href="+62-857-2929-6893">WhatsApp</a></li>
                 </ul>
             </div>
         </div>

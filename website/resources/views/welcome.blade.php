@@ -194,7 +194,7 @@
         /* Facilities Experience Grid */
         .facility-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2.5rem;
             max-width: 1200px;
             margin: 0 auto;
@@ -382,6 +382,15 @@
             font-size: 0.9rem;
         }
 
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--primary-dark);
+            cursor: pointer;
+        }
+
         @media (max-width: 992px) {
             .location-container {
                 grid-template-columns: 1fr;
@@ -393,6 +402,66 @@
                 font-size: 3rem;
             }
         }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(15px);
+                flex-direction: column;
+                padding: 2rem 5%;
+                gap: 1.5rem;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+                clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+                transition: clip-path 0.4s ease-in-out;
+            }
+
+            .nav-links.active {
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            }
+
+            .nav-links a.btn-action {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-content p {
+                font-size: 1.1rem;
+            }
+            
+            .section-header h2 {
+                font-size: 2.2rem;
+            }
+            
+            .basic-features {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .location-info h3 {
+                font-size: 1.8rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -402,6 +471,9 @@
             <i class="fas fa-tree text-primary"></i>
             Bunihayu Forest
         </a>
+        <button class="mobile-menu-btn" aria-label="Toggle Navigation">
+            <i class="fas fa-bars"></i>
+        </button>
         <div class="nav-links">
             <a href="#tentang">Tentang</a>
             <a href="#fasilitas">Fasilitas</a>
@@ -616,6 +688,37 @@
                 navbar.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.03)';
             }
         });
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        const navItems = document.querySelectorAll('.nav-links a');
+
+        if(mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                const icon = mobileMenuBtn.querySelector('i');
+                if(navLinks.classList.contains('active')) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                } else {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            });
+
+            // Close mobile menu when a link is clicked
+            navItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                    const icon = mobileMenuBtn.querySelector('i');
+                    if (icon) {
+                        icon.classList.remove('fa-times');
+                        icon.classList.add('fa-bars');
+                    }
+                });
+            });
+        }
     </script>
 </body>
 </html>

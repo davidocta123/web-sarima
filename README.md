@@ -42,17 +42,34 @@ Website bertindak sebagai "wajah" (Dashboard User/Admin).
    ```bash
    cd website
    ```
-2. Salin `.env.example` ke `.env` jika belum ada, lalu install dependency PHP & Node:
+2. Siapkan file konfigurasi `.env` dan install dependency:
    ```bash
    composer install
    npm install
    npm run build
    ```
-3. Jalankan migrasi database (Aplikasi di-set menjadi SQLite untuk dev, bisa diubah ke Supabase PostgreSQL/MySQL melalui config `.env` di baris `DB_CONNECTION`):
+   > **Catatan**: Jika file `.env` belum ada, salin dari `.env.example` atau buat file baru.
+
+3. Konfigurasi Aplikasi & Hubungkan ke Backend:
+   *   **Generate App Key**:
+       ```bash
+       php artisan key:generate
+       ```
+   *   **Hubungkan ke Backend Python**: Buka file `.env`, pastikan baris `SARIMA_API_URL` mengarah ke URL Flask (default: `http://127.0.0.1:5000`):
+       ```env
+       SARIMA_API_URL=http://127.0.0.1:5000
+       ```
+
+4. Jalankan Migrasi & Seeding Database:
+   Aplikasi ini menggunakan SQLite secara default untuk kemudahan development.
    ```bash
    php artisan migrate
+   php artisan db:seed
    ```
-4. *Start server* aplikasi web Laravel:
+   > Ini akan membuat tabel yang diperlukan dan mendaftarkan akun admin default:
+   > - **Email**: `admin@bunihayu.com`
+   > - **Password**: `password`
+5. *Start server* aplikasi web Laravel:
    ```bash
    php artisan serve
    ```

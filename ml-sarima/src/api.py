@@ -16,6 +16,10 @@ import numpy as np
 import joblib
 import json
 import os
+import sys
+
+# Menambahkan path src ke sys.path untuk absolute import
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 app = Flask(__name__)
 CORS(app)
@@ -190,8 +194,8 @@ def stats():
 def retrain():
     """Retrain model SARIMA."""
     try:
-        from preprocessing import run_preprocessing
-        from sarima_model import run_sarima_pipeline
+        from src.preprocessing import run_preprocessing
+        from src.sarima_model import run_sarima_pipeline
         
         # Re-run preprocessing
         run_preprocessing()
@@ -250,6 +254,51 @@ def weekly_data():
     })
 
 
+@app.route('/api/upload', methods=['POST'])
+def upload_dataset():
+    """Upload a new dataset CSV file."""
+    if 'dataset' not in request.files:
+        return jsonify({'success': False, 'error': 'No file part'}), 400
+    
+    file = request.files['dataset']
+    if file.filename == '':
+        return jsonify({'success': False, 'error': 'No selected file'}), 400
+    
+    if file:
+        file.save(RAW_DATA_PATH)
+        return jsonify({
+            'success': True, 
+            'message': 'Dataset successfully uploaded to API server.'
+        })
+
+
+@app.route('/api/manual-data', methods=['POST'])
+def add_manual_data():
+    """Append a single row of manual data to the raw CSV."""
+    data = request.json
+    required = ['tahun', 'bulan', 'minggu', 'ktm', 'glamping', 'total']
+    
+    if not all(k in data for k in required):
+        return jsonify({'success': False, 'error': 'Missing required fields'}), 400
+    
+    row = f"{data['tahun']},{data['bulan']},{data['minggu']},{data['ktm']},{data['glamping']},{data['total']}"
+    
+    try:
+        with open(RAW_DATA_PATH, 'a') as f:
+            # Ensure we start on a new line
+            f.seek(0, os.SEEK_END)
+            if f.tell() > 0:
+                f.write('\n')
+            f.write(row)
+        
+        return jsonify({
+            'success': True,
+            'message': 'Manual data successfully added to API server.'
+        })
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+
 @app.route('/', methods=['GET'])
 def index():
     """API root — health check."""
@@ -263,7 +312,9 @@ def index():
             'GET /api/weekly': 'Data historis mingguan',
             'GET /api/model-info': 'Info model SARIMA',
             'GET /api/stats': 'Statistik ringkasan',
-            'POST /api/retrain': 'Retrain model'
+            'POST /api/retrain': 'Retrain model',
+            'POST /api/upload': 'Upload new dataset CSV',
+            'POST /api/manual-data': 'Add single row of data'
         }
     })
 

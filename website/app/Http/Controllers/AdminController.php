@@ -91,13 +91,14 @@ class AdminController extends Controller
             'dataset' => 'required|file|mimes:csv,txt'
         ]);
 
-        $csvPath = base_path('../ml-sarima/data/raw/Drafting Data Bunihayu Rev.csv');
-        
         try {
-            $file = $request->file('dataset');
-            $file->move(dirname($csvPath), basename($csvPath));
+            $result = $this->sarimaService->uploadDataset($request->file('dataset'));
             
-            return redirect()->back()->with('success', 'Dataset berhasil diupload! Silakan klik Retrain Model di menu Model Settings.');
+            if ($result['success']) {
+                return redirect()->back()->with('success', 'Dataset berhasil diupload ke server API! Silakan klik Retrain Model.');
+            }
+            
+            return redirect()->back()->with('error', 'Gagal upload dataset: ' . ($result['error'] ?? 'Unknown error'));
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal upload dataset: ' . $e->getMessage());
         }
@@ -113,22 +114,23 @@ class AdminController extends Controller
             'glamping' => 'required|numeric',
         ]);
 
-        $total = $request->ktm + $request->glamping;
-        $row = "{$request->tahun},{$request->bulan},{$request->minggu},{$request->ktm},{$request->glamping},{$total}";
-
-        $csvPath = base_path('../ml-sarima/data/raw/Drafting Data Bunihayu Rev.csv');
+        $data = [
+            'tahun' => $request->tahun,
+            'bulan' => $request->bulan,
+            'minggu' => $request->minggu,
+            'ktm' => $request->ktm,
+            'glamping' => $request->glamping,
+            'total' => $request->ktm + $request->glamping
+        ];
 
         try {
-            $content = File::get($csvPath);
-            // Ensure we start on a new line
-            if (strlen($content) > 0 && substr($content, -1) !== "\n") {
-                $row = "\n" . $row;
-            } else {
-                $row = $row . "\n"; // If it already has newline, append and ensure next one has too
+            $result = $this->sarimaService->addManualData($data);
+            
+            if ($result['success']) {
+                return redirect()->back()->with('success', 'Data manual berhasil dikirim ke server API! Silakan klik Retrain Model.');
             }
             
-            File::append($csvPath, $row);
-            return redirect()->back()->with('success', 'Data manual berhasil ditambahkan! Silakan klik Retrain Model untuk memperbarui prediksi.');
+            return redirect()->back()->with('error', 'Gagal menambah data: ' . ($result['error'] ?? 'Unknown error'));
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal menambah data: ' . $e->getMessage());
         }

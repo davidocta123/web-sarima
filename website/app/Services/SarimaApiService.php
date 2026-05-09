@@ -133,4 +133,44 @@ class SarimaApiService
             return ['success' => false, 'error' => 'API SARIMA tidak dapat dihubungi untuk retraining.'];
         }
     }
+
+    /**
+     * Upload a new dataset CSV to the Python API server
+     */
+    public function uploadDataset($file)
+    {
+        try {
+            $response = Http::timeout(30)
+                ->attach('dataset', file_get_contents($file->getRealPath()), $file->getClientOriginalName())
+                ->post("{$this->baseUrl}/api/upload");
+
+            if ($response->successful()) {
+                return $response->json();
+            }
+
+            Log::error('SARIMA API Upload Error', ['status' => $response->status(), 'body' => $response->body()]);
+            return ['success' => false, 'error' => 'Gagal mengunggah dataset ke server API.'];
+        } catch (\Exception $e) {
+            Log::error('SARIMA API Upload Exception', ['message' => $e->getMessage()]);
+            return ['success' => false, 'error' => 'Tidak dapat menghubungi server API untuk mengunggah dataset.'];
+        }
+    }
+
+    /**
+     * Send manual data row to the Python API server
+     */
+    public function addManualData($data)
+    {
+        try {
+            $response = Http::timeout(10)->post("{$this->baseUrl}/api/manual-data", $data);
+
+            if ($response->successful()) {
+                return $response->json();
+            }
+
+            return ['success' => false, 'error' => 'Gagal menambahkan data manual ke server API.'];
+        } catch (\Exception $e) {
+            return ['success' => false, 'error' => 'Tidak dapat menghubungi server API untuk menambahkan data manual.'];
+        }
+    }
 }

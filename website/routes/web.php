@@ -35,4 +35,21 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// Temporary Route to Initialize Database without Shell
+Route::get('/init-db', function () {
+    try {
+        echo "Starting migration...<br>";
+        \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+        echo "Migration done!<br>";
+        
+        echo "Starting seeding...<br>";
+        \Illuminate\Support\Facades\Artisan::call('db:seed', ['--force' => true]);
+        echo "Seeding done!<br>";
+        
+        return "Database initialized successfully! Please login at /login";
+    } catch (\Exception $e) {
+        return "Error: " . $e->getMessage();
+    }
+});
+
 require __DIR__.'/auth.php';

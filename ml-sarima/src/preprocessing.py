@@ -21,8 +21,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RAW_DATA_PATH = os.path.join(BASE_DIR, 'data', 'raw', 'Drafting Data Bunihayu Rev.csv')
 PROCESSED_DIR = os.path.join(BASE_DIR, 'data', 'processed')
 
-# Buat folder processed jika belum ada
+# Buat folder jika belum ada
 os.makedirs(PROCESSED_DIR, exist_ok=True)
+os.makedirs(os.path.dirname(RAW_DATA_PATH), exist_ok=True)
 
 # ============================================================
 # MAPPING BULAN INDONESIA -> ANGKA

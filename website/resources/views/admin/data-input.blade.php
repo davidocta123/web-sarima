@@ -19,11 +19,11 @@
                 <div class="flex items-center justify-center w-full">
                     <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-56 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 transition-colors">
                         <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                            <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-3"></i>
-                            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400 font-semibold">Klik untuk memilih file</p>
-                            <p class="text-xs text-gray-400">File .csv atau .txt saja</p>
+                            <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-3" id="upload-icon"></i>
+                            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400 font-semibold" id="upload-text">Klik untuk memilih file</p>
+                            <p class="text-xs text-gray-400" id="upload-subtext">File .csv atau .txt saja</p>
                         </div>
-                        <input id="dropzone-file" type="file" class="hidden" name="dataset" accept=".csv,.txt" required />
+                        <input id="dropzone-file" type="file" class="hidden" name="dataset" accept=".csv,.txt" required onchange="updateFileName(this)" />
                     </label>
                 </div>
                 <div class="mt-4 flex justify-end">
@@ -34,6 +34,21 @@
                 </div>
             </form>
         </div>
+
+        <script>
+            function updateFileName(input) {
+                const text = document.getElementById('upload-text');
+                const subtext = document.getElementById('upload-subtext');
+                const icon = document.getElementById('upload-icon');
+                
+                if (input.files && input.files[0]) {
+                    text.innerText = "File Terpilih:";
+                    subtext.innerText = input.files[0].name;
+                    subtext.classList.add('text-blue-500', 'font-bold', 'text-sm');
+                    icon.classList.replace('text-gray-400', 'text-blue-500');
+                }
+            }
+        </script>
 
         <!-- Manual Input Section -->
         <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 h-full">

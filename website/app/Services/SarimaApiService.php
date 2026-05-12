@@ -150,11 +150,12 @@ class SarimaApiService
                 return $response->json();
             }
 
+            $errorData = $response->json();
             Log::error('SARIMA API Upload Error', ['status' => $response->status(), 'body' => $response->body()]);
-            return ['success' => false, 'error' => 'Gagal mengunggah dataset ke server API.'];
+            return ['success' => false, 'error' => $errorData['error'] ?? 'Gagal mengunggah dataset ke server API.'];
         } catch (\Exception $e) {
             Log::error('SARIMA API Upload Exception', ['message' => $e->getMessage()]);
-            return ['success' => false, 'error' => 'Tidak dapat menghubungi server API untuk mengunggah dataset.'];
+            return ['success' => false, 'error' => 'Tidak dapat menghubungi server API: ' . $e->getMessage()];
         }
     }
 

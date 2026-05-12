@@ -455,7 +455,7 @@ def export_results(fitted_model, forecast_df, metrics, order, seasonal_order):
 # ============================================================
 def run_sarima_pipeline(forecast_months=12):
     """Jalankan keseluruhan pipeline SARIMA."""
-    from evaluation import evaluate_model
+    from src.evaluation import evaluate_model
     
     print("\n" + "=" * 60)
     print("SARIMA MODEL PIPELINE")

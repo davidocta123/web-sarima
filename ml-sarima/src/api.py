@@ -21,6 +21,8 @@ import sys
 # Menambahkan path src ke sys.path untuk absolute import
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+from src.preprocessing import RAW_DATA_PATH
+
 app = Flask(__name__)
 CORS(app)
 
@@ -274,6 +276,33 @@ def upload_dataset():
             'success': True, 
             'message': 'Dataset successfully uploaded to API server.'
         })
+
+
+@app.route('/api/dataset-info', methods=['GET'])
+def get_dataset_info():
+    """Get information about the raw dataset file."""
+    if not os.path.exists(RAW_DATA_PATH):
+        return jsonify({
+            'exists': False,
+            'filename': os.path.basename(RAW_DATA_PATH),
+            'rows': 0,
+            'last_updated': '-'
+        })
+    
+    import datetime
+    mtime = os.path.getmtime(RAW_DATA_PATH)
+    last_updated = datetime.datetime.fromtimestamp(mtime).strftime('%Y-%m-%d %H:%M:%S')
+    
+    # Count rows
+    with open(RAW_DATA_PATH, 'r') as f:
+        rows = sum(1 for line in f) - 1 # Subtract header
+        
+    return jsonify({
+        'exists': True,
+        'filename': os.path.basename(RAW_DATA_PATH),
+        'rows': max(0, rows),
+        'last_updated': last_updated
+    })
 
 
 @app.route('/api/manual-data', methods=['POST'])

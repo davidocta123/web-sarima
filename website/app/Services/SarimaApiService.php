@@ -176,4 +176,15 @@ class SarimaApiService
             return ['success' => false, 'error' => 'Tidak dapat menghubungi server API untuk menambahkan data manual.'];
         }
     }
+
+    public function getDatasetInfo()
+    {
+        try {
+            $response = Http::timeout(10)->get("{$this->baseUrl}/api/dataset-info");
+            return $response->successful() ? $response->json() : null;
+        } catch (\Exception $e) {
+            Log::error('SARIMA API Dataset Info Error', ['message' => $e->getMessage()]);
+            return null;
+        }
+    }
 }

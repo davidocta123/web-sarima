@@ -39,23 +39,15 @@ class AdminController extends Controller
 
     public function dataInput()
     {
-        $csvPath = base_path('../ml-sarima/data/raw/Drafting Data Bunihayu Rev.csv');
-        $rowsCount = 0;
-        $lastModified = '-';
+        $apiInfo = $this->sarimaService->getDatasetInfo();
         
-        if (File::exists($csvPath)) {
-            $fileContent = file($csvPath);
-            $rowsCount = count($fileContent) - 1; // Subtract header
-            $lastModified = date("Y-m-d H:i:s", File::lastModified($csvPath));
-        }
-
         $datasets = [
             [
                 'id' => 1,
-                'filename' => 'Drafting Data Bunihayu Rev.csv',
-                'uploaded_at' => $lastModified,
-                'status' => 'Active',
-                'rows' => $rowsCount
+                'filename' => $apiInfo['filename'] ?? 'Drafting Data Bunihayu Rev.csv',
+                'uploaded_at' => $apiInfo['last_updated'] ?? '-',
+                'status' => ($apiInfo['exists'] ?? false) ? 'Active' : 'Missing',
+                'rows' => $apiInfo['rows'] ?? 0
             ]
         ];
 

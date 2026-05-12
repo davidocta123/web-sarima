@@ -69,6 +69,9 @@ def cleaning_data(filepath=RAW_DATA_PATH):
     print("=" * 60)
 
     # 1. Load CSV
+    if not os.path.exists(filepath):
+        raise FileNotFoundError(f"Dataset file tidak ditemukan di: {filepath}. Silakan upload dataset terlebih dahulu.")
+        
     df = pd.read_csv(filepath)
     print(f"\n[1.1] Data mentah dimuat: {df.shape[0]} baris, {df.shape[1]} kolom")
     print(f"      Kolom: {list(df.columns)}")

@@ -128,9 +128,11 @@ class SarimaApiService
                 return $response->json();
             }
             
-            return ['success' => false, 'error' => 'Gagal melakukan retrain model.'];
+            $errorData = $response->json();
+            return ['success' => false, 'error' => $errorData['error'] ?? 'Gagal melakukan retrain model di server API.'];
         } catch (\Exception $e) {
-            return ['success' => false, 'error' => 'API SARIMA tidak dapat dihubungi untuk retraining.'];
+            Log::error('SARIMA API Exception: /api/retrain', ['message' => $e->getMessage()]);
+            return ['success' => false, 'error' => 'API SARIMA tidak dapat dihubungi: ' . $e->getMessage()];
         }
     }
 

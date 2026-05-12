@@ -215,9 +215,13 @@ def retrain():
             }
         })
     except Exception as e:
+        import traceback
+        error_msg = f"Retrain Error: {str(e)}"
+        print(error_msg)
+        traceback.print_exc()
         return jsonify({
             'success': False,
-            'error': str(e)
+            'error': error_msg
         }), 500
 
 
